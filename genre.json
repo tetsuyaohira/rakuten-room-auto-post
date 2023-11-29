@@ -1,0 +1,237 @@
+{
+  "brothers": [],
+  "children": [
+    {
+      "child": {
+        "genreId": 100371,
+        "genreLevel": 1,
+        "genreName": "レディースファッション"
+      }
+    },
+    {
+      "child": {
+        "genreId": 551177,
+        "genreLevel": 1,
+        "genreName": "メンズファッション"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100433,
+        "genreLevel": 1,
+        "genreName": "インナー・下着・ナイトウェア"
+      }
+    },
+    {
+      "child": {
+        "genreId": 216131,
+        "genreLevel": 1,
+        "genreName": "バッグ・小物・ブランド雑貨"
+      }
+    },
+    { "child": { "genreId": 558885, "genreLevel": 1, "genreName": "靴" } },
+    { "child": { "genreId": 558929, "genreLevel": 1, "genreName": "腕時計" } },
+    {
+      "child": {
+        "genreId": 216129,
+        "genreLevel": 1,
+        "genreName": "ジュエリー・アクセサリー"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100533,
+        "genreLevel": 1,
+        "genreName": "キッズ・ベビー・マタニティ"
+      }
+    },
+    {
+      "child": { "genreId": 566382, "genreLevel": 1, "genreName": "おもちゃ" }
+    },
+    {
+      "child": {
+        "genreId": 101070,
+        "genreLevel": 1,
+        "genreName": "スポーツ・アウトドア"
+      }
+    },
+    { "child": { "genreId": 562637, "genreLevel": 1, "genreName": "家電" } },
+    {
+      "child": {
+        "genreId": 211742,
+        "genreLevel": 1,
+        "genreName": "TV・オーディオ・カメラ"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100026,
+        "genreLevel": 1,
+        "genreName": "パソコン・周辺機器"
+      }
+    },
+    {
+      "child": {
+        "genreId": 564500,
+        "genreLevel": 1,
+        "genreName": "スマートフォン・タブレット"
+      }
+    },
+    {
+      "child": {
+        "genreId": 565004,
+        "genreLevel": 1,
+        "genreName": "光回線・モバイル通信"
+      }
+    },
+    { "child": { "genreId": 100227, "genreLevel": 1, "genreName": "食品" } },
+    {
+      "child": {
+        "genreId": 551167,
+        "genreLevel": 1,
+        "genreName": "スイーツ・お菓子"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100316,
+        "genreLevel": 1,
+        "genreName": "水・ソフトドリンク"
+      }
+    },
+    {
+      "child": {
+        "genreId": 510915,
+        "genreLevel": 1,
+        "genreName": "ビール・洋酒"
+      }
+    },
+    {
+      "child": {
+        "genreId": 510901,
+        "genreLevel": 1,
+        "genreName": "日本酒・焼酎"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100804,
+        "genreLevel": 1,
+        "genreName": "インテリア・寝具・収納"
+      }
+    },
+    {
+      "child": {
+        "genreId": 215783,
+        "genreLevel": 1,
+        "genreName": "日用品雑貨・文房具・手芸"
+      }
+    },
+    {
+      "child": {
+        "genreId": 558944,
+        "genreLevel": 1,
+        "genreName": "キッチン用品・食器・調理器具"
+      }
+    },
+    {
+      "child": {
+        "genreId": 200162,
+        "genreLevel": 1,
+        "genreName": "本・雑誌・コミック"
+      }
+    },
+    { "child": { "genreId": 101240, "genreLevel": 1, "genreName": "CD・DVD" } },
+    {
+      "child": {
+        "genreId": 101205,
+        "genreLevel": 1,
+        "genreName": "テレビゲーム"
+      }
+    },
+    { "child": { "genreId": 101164, "genreLevel": 1, "genreName": "ホビー" } },
+    {
+      "child": {
+        "genreId": 112493,
+        "genreLevel": 1,
+        "genreName": "楽器・音響機器"
+      }
+    },
+    {
+      "child": { "genreId": 101114, "genreLevel": 1, "genreName": "車・バイク" }
+    },
+    {
+      "child": {
+        "genreId": 503190,
+        "genreLevel": 1,
+        "genreName": "車用品・バイク用品"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100939,
+        "genreLevel": 1,
+        "genreName": "美容・コスメ・香水"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100938,
+        "genreLevel": 1,
+        "genreName": "ダイエット・健康"
+      }
+    },
+    {
+      "child": {
+        "genreId": 551169,
+        "genreLevel": 1,
+        "genreName": "医薬品・コンタクト・介護"
+      }
+    },
+    {
+      "child": {
+        "genreId": 101213,
+        "genreLevel": 1,
+        "genreName": "ペット・ペットグッズ"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100005,
+        "genreLevel": 1,
+        "genreName": "花・ガーデン・DIY"
+      }
+    },
+    {
+      "child": {
+        "genreId": 101438,
+        "genreLevel": 1,
+        "genreName": "サービス・リフォーム"
+      }
+    },
+    {
+      "child": {
+        "genreId": 111427,
+        "genreLevel": 1,
+        "genreName": "住宅・不動産"
+      }
+    },
+    {
+      "child": {
+        "genreId": 101381,
+        "genreLevel": 1,
+        "genreName": "カタログギフト・チケット"
+      }
+    },
+    {
+      "child": {
+        "genreId": 100000,
+        "genreLevel": 1,
+        "genreName": "百貨店・総合通販・ギフト"
+      }
+    }
+  ],
+  "current": { "genreId": 0, "genreLevel": 0, "genreName": "" },
+  "parents": [],
+  "tagGroups": []
+}

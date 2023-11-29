@@ -1,0 +1,1 @@
+# rakuten-room-auto-post
