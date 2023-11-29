@@ -2,15 +2,15 @@ import OpenAI from "openai";
 
 const ROLE_CONTENT = `Please write short, attractive, friendly sentences to post on Rakuten ROOM so that people will want to buy your products.
 - Please do not use "[ and ]" because they are garbled.
-- Please use pictograms in moderation.
+- Please use pictograms.
 - Please add a relevant hashtag at the end of the sentence.
 - Please keep it within 350 characters.
 - Answer in the language asked.`;
 // const ROLE_CONTENT = `楽天ROOMに投稿する文章を商品を購入したくなるように魅力的にフレンドリーに短く書いてください。
 // - 【と】は文字化けするので絶対に使わないでください。
-// - 適度に絵文字を使ってください。
+// - 絵文字を使ってください。
 // - 文章の最後に関連するハッシュタグをつけてください
-// - 250文字以内でお願いします。`;
+// - 350文字以内でお願いします。`;
 
 const ASSISTANT_CONTENT = `
 🦄✨ ユニコーンが誘う魔法のユートピアへようこそ ✨🦄
