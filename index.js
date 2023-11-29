@@ -34,7 +34,7 @@ const ASSISTANT_CONTENT = `
 #JILLSTUART #ユニコーンユートピア #ホリデーコレクション #限定セット #メイクアップ #ギフトセット #特別なプレゼント #スウィートユートピア #メイクの魔法 #LINEキャンペーン #ビューティー体験`;
 
 const RAKUTEN_RANKING_URL =
-  "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20220601?genreId=100371&page=6";
+  "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20220601?genreId=100371&page=9";
 // const RAKUTEN_SEARCH_URL = `https://app.rakuten.co.jp/services/api/IchibaItem/Search/20220601?format=json&availability=1&orFlag=0&keyword=ディズニー&page=2`;
 
 async function getRakutenRankingData() {
@@ -53,30 +53,15 @@ async function getRakutenRankingData() {
       // continue;
 
       console.log("1:" + new Date().toLocaleString());
-      const productDescription = await generateProductDescription(
+      await scrapeWebsite(
+        url,
+        process.env.USER_ID,
+        process.env.USER_PASSWORD,
         catchcopy,
         itemName,
         itemCaption
       );
-      console.log("2:" + new Date().toLocaleString());
-
-      // const productDescription = `🎄🎁 可愛いクリスマスパッケージに詰まった、神戸風月堂の「クリスマスミニゴーフル 2入」は、クリスマスのお菓子にぴったりです！サンタとクマのかわいいパッケージには、バニラ、ストロベリー風味、チョコレートの3種類のクリームが詰まっています。
-      // 小さいサイズなので、ちょっとした贈り物やお土産にも最適です。このクリスマス、心温まるゴーフルで特別なプレゼントをしませんか？😍🎅🐻
-
-      // #クリスマスミニゴーフル #プチギフト #クリスマスプレゼント #お菓子 #可愛いパッケージ #神戸風月堂 #お土産 #小さいサイズ #クリスマス #ギフトアイデア`;
-
-      // 500文字に加工
-      const productDescription500 = productDescription.slice(0, 500);
-      console.log(productDescription500);
-
-      if (productDescription500) {
-        await scrapeWebsite(
-          url,
-          process.env.USER_ID,
-          process.env.USER_PASSWORD,
-          productDescription500
-        );
-      }
+      console.log("3:" + new Date().toLocaleString());
     } catch (error) {
       console.error("Error:", error);
     }
@@ -84,6 +69,7 @@ async function getRakutenRankingData() {
 }
 
 async function generateProductDescription(catchcopy, itemName, itemCaption) {
+  const itemCaption1000 = itemCaption.slice(0, 1000);
   try {
     const prompt = `以下の商品を購入したくなるように魅力的にフレンドリーに短く書いてください。
 250字以内に収めてください。
@@ -91,7 +77,7 @@ async function generateProductDescription(catchcopy, itemName, itemCaption) {
 以下、商品の特徴
 ${catchcopy} ${itemName}
 
-${itemCaption}
+${itemCaption1000}
 `;
 
     const completion = await openai.chat.completions.create({
@@ -110,7 +96,6 @@ ${itemCaption}
       // model: "gpt-4-1106-preview",
       // response_format: { type: "json_object" },
     });
-    // console.log(completion.choices[0].message.content);
 
     return completion.choices[0].message.content.trim();
   } catch (error) {
@@ -122,43 +107,68 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function scrapeWebsite(url, userId, password, textToPaste) {
-  console.log("3:" + new Date().toLocaleString());
-  const browser = await puppeteer.launch({ headless: true });
-  console.log("4:" + new Date().toLocaleString());
+async function scrapeWebsite(
+  url,
+  userId,
+  password,
+  catchcopy,
+  itemName,
+  itemCaption
+) {
+  const browser = await puppeteer.launch({ headless: "new" });
+  // const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.setUserAgent(
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
   );
-  console.log("5:" + new Date().toLocaleString());
   await page.goto(url);
-  console.log("6:" + new Date().toLocaleString());
-  // await page.waitForNavigation(); // ページ遷移を待つ
 
   // ログイン処理
-  console.log("7:" + new Date().toLocaleString());
   await page.waitForSelector("#loginInner_u", { visible: true });
   await page.type("#loginInner_u", userId);
-
-  console.log("8:" + new Date().toLocaleString());
   await page.waitForSelector("#loginInner_p", { visible: true });
   await page.type("#loginInner_p", password);
-
-  console.log("9:" + new Date().toLocaleString());
   await page.click('input[value="ログイン"]');
 
-  console.log("10:" + new Date().toLocaleString());
+  // ログイン後のページ遷移を待つ
+  await page.waitForSelector("#collect-content", {
+    visible: true,
+  });
+
+  // コレ！済みの場合は、処理を終了
+  let modalElement = null;
+  try {
+    await page.waitForSelector(".modal-dialog-container", {
+      visible: true,
+      timeout: 500,
+    });
+    modalElement = await page.$(".modal-dialog-container");
+  } catch (error) {}
+  if (modalElement) {
+    console.log("「すでにコレしている商品です」のため処理を終了");
+    await browser.close();
+    return;
+  }
+
+  // メッセージ取得
+  const productDescription = await generateProductDescription(
+    catchcopy,
+    itemName,
+    itemCaption
+  );
+  const productDescription500 = productDescription.slice(0, 500);
+  console.log("2:" + new Date().toLocaleString());
+  console.log(productDescription500);
+
+  //　投稿処理
   await page.waitForSelector("#collect-content", {
     visible: true,
   });
   await page.click("#collect-content");
-  await page.waitForTimeout(500);
-  await page.type("#collect-content", textToPaste, { delay: 10 });
-  console.log("11:" + new Date().toLocaleString());
+  await page.type("#collect-content", productDescription500, { delay: 10 });
 
   await page.waitForSelector("button", { visible: true });
   const buttonToClick = await page.$x("//button[contains(., '完了')]");
-  // await page.waitForTimeout(100); // 100ミリ秒待つ
 
   if (buttonToClick.length > 0) {
     console.log("12:" + new Date().toLocaleString());
@@ -166,10 +176,7 @@ async function scrapeWebsite(url, userId, password, textToPaste) {
     await page.waitForTimeout(500);
   }
 
-  // await page.waitForNavigation(); // ページ遷移を待つ
-  console.log("13:" + new Date().toLocaleString());
   await browser.close();
-  console.log("14:" + new Date().toLocaleString());
 }
 
 getRakutenRankingData();
