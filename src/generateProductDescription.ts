@@ -24,9 +24,9 @@ const ASSISTANT_CONTENT = `
 #JILLSTUART #ユニコーンユートピア #ホリデーコレクション #限定セット #メイクアップ #ギフトセット #特別なプレゼント #スウィートユートピア #メイクの魔法 #LINEキャンペーン #ビューティー体験`;
 
 export async function generateProductDescription(
-  catchcopy,
-  itemName,
-  itemCaption
+  catchcopy: string,
+  itemName: string,
+  itemCaption: string
 ) {
   const openai = new OpenAI({ apiKey: process.env.CHATGPT_API_KEY });
 
@@ -58,7 +58,7 @@ export async function generateProductDescription(
       // response_format: { type: "json_object" },
     });
 
-    return completion.choices[0].message.content.trim();
+    return completion?.choices[0]?.message?.content?.trim();
   } catch (error) {
     console.error("Error generating product description:", error);
     return "";

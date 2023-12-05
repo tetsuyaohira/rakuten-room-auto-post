@@ -1,9 +1,14 @@
 import puppeteer from "puppeteer";
-import { generateProductDescription } from "./generateProductDescription.js";
+import { generateProductDescription } from "./generateProductDescription";
 
-export async function scrapeWebsite(url, catchcopy, itemName, itemCaption) {
-  const userId = process.env.USER_ID;
-  const password = process.env.USER_PASSWORD;
+export async function scrapeWebsite(
+  url: string,
+  catchcopy: string,
+  itemName: string,
+  itemCaption: string
+) {
+  const userId = process.env.USER_ID || "";
+  const password = process.env.USER_PASSWORD || "";
 
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
@@ -45,7 +50,7 @@ export async function scrapeWebsite(url, catchcopy, itemName, itemCaption) {
     itemName,
     itemCaption
   );
-  const productDescription500 = productDescription.slice(0, 500);
+  const productDescription500 = productDescription?.slice(0, 500) || "";
   console.log("2:" + new Date().toLocaleString());
   console.log(productDescription500);
 
@@ -61,6 +66,7 @@ export async function scrapeWebsite(url, catchcopy, itemName, itemCaption) {
 
   if (buttonToClick.length > 0) {
     console.log("12:" + new Date().toLocaleString());
+    // @ts-ignore
     await buttonToClick[0].click();
     await page.waitForTimeout(500);
   }

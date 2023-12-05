@@ -3,24 +3,16 @@ import dotenv from "dotenv";
 import { getDayOfYear } from "date-fns";
 dotenv.config();
 
-import { getRakutenRankingData } from "./src/getRakutenRankingData.js";
-import { scrapeWebsite } from "./src/scrapeWebsite.js";
-// import getGenreIdsByTime from "./src/getGenreIdsByTime.js";
+import { getRakutenRankingData } from "./src/getRakutenRankingData";
+import { scrapeWebsite } from "./src/scrapeWebsite";
+import getGenreIdsByTime from "./src/getGenreIdsByTime";
 
-const getNumberFromDayOfYear = (dayOfYear) => {
+const getNumberFromDayOfYear = (dayOfYear: number) => {
   let number = dayOfYear % 10;
   if (number === 0) {
     number = 10;
   }
   return number;
-};
-
-const genres = {
-  9: [100371, 100433],
-  12: [216131, 558885],
-  15: [216129, 100533],
-  18: [551167, 100804],
-  21: [558944, 100939],
 };
 
 async function main() {
@@ -30,8 +22,9 @@ async function main() {
 
   const currentHour = today.getHours();
   console.log("numberToday:" + numberToday);
-  const targetGenres = genres[currentHour];
-  if (!targetGenres) {
+  const targetGenres = getGenreIdsByTime(currentHour);
+
+  if (targetGenres.length === 0) {
     console.log("対象ジャンルなし");
     return;
   }
