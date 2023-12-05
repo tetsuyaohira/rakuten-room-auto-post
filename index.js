@@ -1,16 +1,11 @@
 import { CronJob } from "cron";
 import dotenv from "dotenv";
+import { getDayOfYear } from "date-fns";
 dotenv.config();
 
 import { getRakutenRankingData } from "./src/getRakutenRankingData.js";
 import { scrapeWebsite } from "./src/scrapeWebsite.js";
-
-const getDayOfYear = (date) => {
-  const start = new Date(date.getFullYear(), 0, 0);
-  const diff = date - start;
-  const oneDay = 1000 * 60 * 60 * 24;
-  return Math.floor(diff / oneDay);
-};
+// import getGenreIdsByTime from "./src/getGenreIdsByTime.js";
 
 const getNumberFromDayOfYear = (dayOfYear) => {
   let number = dayOfYear % 10;
@@ -42,16 +37,7 @@ async function main() {
   }
 
   for (const genreId of targetGenres) {
-    let targerPage = numberToday;
-    if (currentHour === 12) {
-      targerPage += 10;
-    } else if (currentHour === 18) {
-      targerPage += 20;
-    } else if (currentHour === 21) {
-      targerPage += 30;
-    }
-
-    const elements = await getRakutenRankingData(genreId, targerPage);
+    const elements = await getRakutenRankingData(genreId, numberToday);
 
     for (const element of elements) {
       try {
@@ -70,6 +56,7 @@ async function main() {
       }
     }
   }
+  console.log("End job:" + new Date().toLocaleString());
 }
 
 const job = new CronJob("0 0 9,12,18,21 * * *", () => {
