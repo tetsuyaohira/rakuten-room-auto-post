@@ -1,12 +1,14 @@
 import puppeteer from "puppeteer";
 import { generateProductDescription } from "./generateProductDescription";
 
-export async function scrapeWebsite(
+const scrapeWebsite = async (
   url: string,
   catchcopy: string,
   itemName: string,
   itemCaption: string
-) {
+) => {
+  console.log("1:" + new Date().toLocaleString());
+
   const userId = process.env.USER_ID || "";
   const password = process.env.USER_PASSWORD || "";
 
@@ -65,11 +67,13 @@ export async function scrapeWebsite(
   const buttonToClick = await page.$x("//button[contains(., '完了')]");
 
   if (buttonToClick.length > 0) {
-    console.log("12:" + new Date().toLocaleString());
     // @ts-ignore
     await buttonToClick[0].click();
+    console.log("3:" + new Date().toLocaleString());
     await page.waitForTimeout(500);
   }
 
   await browser.close();
-}
+};
+
+export default scrapeWebsite;

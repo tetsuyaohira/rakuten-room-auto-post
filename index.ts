@@ -1,61 +1,51 @@
 import { CronJob } from "cron";
 import dotenv from "dotenv";
-import { getDayOfYear } from "date-fns";
 dotenv.config();
 
-import { getRakutenRankingData } from "./src/getRakutenRankingData";
-import { scrapeWebsite } from "./src/scrapeWebsite";
+import parseCommandLineArgs from "./src/parseCommandLineArgs";
+import {
+  getRakutenRankingDataByGenre,
+  getRakutenRankingDataByKeyword,
+} from "./src/getRakutenRankingData";
 import getGenreIdsByTime from "./src/getGenreIdsByTime";
+import getNumberToday from "./src/lib/getNumberToday";
+import postRakutenRoom from "./src/postRakutenRoom";
 
-const getNumberFromDayOfYear = (dayOfYear: number) => {
-  let number = dayOfYear % 10;
-  if (number === 0) {
-    number = 10;
-  }
-  return number;
-};
-
-async function main() {
+async function runJob() {
   const today = new Date();
-  const dayOfYearToday = getDayOfYear(today);
-  const numberToday = getNumberFromDayOfYear(dayOfYearToday);
-
   const currentHour = today.getHours();
-  console.log("numberToday:" + numberToday);
   const targetGenres = getGenreIdsByTime(currentHour);
-
   if (targetGenres.length === 0) {
     console.log("対象ジャンルなし");
     return;
   }
 
   for (const genreId of targetGenres) {
-    const elements = await getRakutenRankingData(genreId, numberToday);
-
-    for (const element of elements) {
-      try {
-        const { catchcopy, itemName, itemCaption, itemCode } = element.Item;
-
-        console.log("-----------------------------------------------");
-        const url = `https://room.rakuten.co.jp/mix?itemcode=${itemCode}&scid=we_room_upc60`;
-        console.log(url);
-        // continue;
-
-        console.log("1:" + new Date().toLocaleString());
-        await scrapeWebsite(url, catchcopy, itemName, itemCaption);
-        console.log("3:" + new Date().toLocaleString());
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
+    main(getRakutenRankingDataByGenre, genreId);
   }
   console.log("End job:" + new Date().toLocaleString());
 }
 
-const job = new CronJob("0 0 9,12,18,21 * * *", () => {
-  console.log("Start job:" + new Date().toLocaleString());
-  main();
-});
+async function main(
+  getRakutenRankingData: (genreOrKeyword: string, numberToday: number) => any,
+  genreOrKeyword: string
+) {
+  const numberToday = getNumberToday();
+  const elements = await getRakutenRankingData(genreOrKeyword, numberToday);
+  await postRakutenRoom(elements);
+  console.log("End job:" + new Date().toLocaleString());
+}
 
-// main();
-job.start();
+const args = process.argv.slice(2);
+const options = parseCommandLineArgs(args);
+if (options.genre) {
+  main(getRakutenRankingDataByGenre, options.genre);
+} else if (options.keyword) {
+  main(getRakutenRankingDataByKeyword, options.keyword);
+} else {
+  const job = new CronJob("0 0 9,12,15,18,21 * * *", () => {
+    console.log("Start job:" + new Date().toLocaleString());
+    runJob();
+  });
+  job.start();
+}
