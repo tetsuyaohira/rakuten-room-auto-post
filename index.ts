@@ -43,7 +43,7 @@ if (options.genre) {
 } else if (options.keyword) {
   main(getRakutenRankingDataByKeyword, options.keyword);
 } else {
-  const job = new CronJob("0 0 9,12,15,18,21 * * *", () => {
+  const job = new CronJob("0 0 11,12,13,14,15,16,17,18,19,20 * * *", () => {
     console.log("Start job:" + new Date().toLocaleString());
     runJob();
   });
