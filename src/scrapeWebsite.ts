@@ -4,8 +4,7 @@ import { generateProductDescription } from "./generateProductDescription";
 const scrapeWebsite = async (
   url: string,
   catchcopy: string,
-  itemName: string,
-  itemCaption: string
+  itemName: string
 ) => {
   console.log("1:" + new Date().toLocaleString());
 
@@ -49,8 +48,7 @@ const scrapeWebsite = async (
   // メッセージ取得
   const productDescription = await generateProductDescription(
     catchcopy,
-    itemName,
-    itemCaption
+    itemName
   );
   const productDescription500 = productDescription?.slice(0, 500) || "";
   console.log("2:" + new Date().toLocaleString());

@@ -12,6 +12,8 @@ export async function getRakutenRankingDataByGenre(
     },
   });
 
+  // 21件目まで返す.
+  // return response.data.Items.slice(0, 21);
   return response.data.Items;
 }
 

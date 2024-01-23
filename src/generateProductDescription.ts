@@ -25,20 +25,18 @@ const ASSISTANT_CONTENT = `
 
 export async function generateProductDescription(
   catchcopy: string,
-  itemName: string,
-  itemCaption: string
+  itemName: string
 ) {
   const openai = new OpenAI({ apiKey: process.env.CHATGPT_API_KEY });
 
-  const itemCaption1000 = itemCaption.slice(0, 1000);
   try {
-    const prompt = `以下の商品を購入したくなるように魅力的にフレンドリーに短く書いてください。
+    const prompt = `以下の商品をあなたは購入しました。他の人が購入したくなるような魅力的でフレンドリーな文章を書いてください。
   250字以内に収めてください。
   
   以下、商品の特徴
-  ${catchcopy} ${itemName}
+  ${catchcopy}
+  ${itemName}
   
-  ${itemCaption1000}
   `;
 
     const completion = await openai.chat.completions.create({
