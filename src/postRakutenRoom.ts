@@ -11,7 +11,7 @@ async function postRakutenRoom(elements: any) {
 
       await scrapeWebsite(url, catchcopy, itemName);
 
-      await new Promise((resolve) => setTimeout(resolve, 90000)); // 1分３０秒待つ
+      await new Promise((resolve) => setTimeout(resolve, 60000)); // 1分待つ
     } catch (error) {
       console.error("Error:", error);
     }
