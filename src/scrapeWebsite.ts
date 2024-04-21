@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import os from "os";
 import { generateProductDescription } from "./generateProductDescription";
 
 const scrapeWebsite = async (
@@ -13,9 +14,8 @@ const scrapeWebsite = async (
 
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
-  await page.setUserAgent(
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
-  );
+  const userAgent = getUserAgent();
+  await page.setUserAgent(userAgent);
   await page.goto(url);
 
   // ログイン処理
@@ -74,6 +74,20 @@ const scrapeWebsite = async (
   await browser.close();
 
   return true;
+};
+
+const getUserAgent = (): string => {
+  const platform = os.platform();
+  switch (platform) {
+    case "win32": // Windows
+      return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36";
+    case "darwin": // macOS
+      return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36";
+    case "linux": // Linux
+      return "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36";
+    default:
+      return "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36";
+  }
 };
 
 export default scrapeWebsite;
