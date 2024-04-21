@@ -42,7 +42,7 @@ const scrapeWebsite = async (
   if (modalElement) {
     console.log("「すでにコレしている商品です」のため処理を終了");
     await browser.close();
-    return;
+    return false;
   }
 
   // メッセージ取得
@@ -72,6 +72,8 @@ const scrapeWebsite = async (
   }
 
   await browser.close();
+
+  return true;
 };
 
 export default scrapeWebsite;

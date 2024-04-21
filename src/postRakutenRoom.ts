@@ -9,9 +9,9 @@ async function postRakutenRoom(elements: any) {
       const url = `https://room.rakuten.co.jp/mix?itemcode=${itemCode}&scid=we_room_upc60`;
       console.log(url);
 
-      await scrapeWebsite(url, catchcopy, itemName);
-
-      await new Promise((resolve) => setTimeout(resolve, 60000)); // 1分待つ
+      if (await scrapeWebsite(url, catchcopy, itemName)) {
+        await new Promise((resolve) => setTimeout(resolve, 60000)); // 1分待つ
+      }
     } catch (error) {
       console.error("Error:", error);
     }
