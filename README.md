@@ -26,21 +26,41 @@ npm install
 
 ## 使用方法
 
-1.`.env`ファイルを作成し、必要なAPIキーを設定します。
+1.`.env`ファイルを作成し、必要な API キーを設定します。
+
 ```plaintext
 RAKUTEN_API_KEY=あなたの楽天APIキー
 CHATGPT_API_KEY=あなたのChatGPT APIキー
 ```
+
 2.アプリケーションを実行します。
+
 ```bash
 npm start
 ```
 
+## 使用方法(optional)
+
+### ジャンルを指定して実行する場合
+
+```bash
+npm start genre 100283
+```
+
+### キーワードを指定して実行する場合
+
+```bash
+npm start keyword クリスマス
+```
+
 ## ライセンス
-このプロジェクトは MITライセンス の下で公開されています。
+
+このプロジェクトは MIT ライセンス の下で公開されています。
 
 ## コントリビューション
-プルリクエストやフィードバックはいつでも歓迎します。新しい機能の提案やバグ報告は、GitHubのIssuesに投稿してください。
+
+プルリクエストやフィードバックはいつでも歓迎します。新しい機能の提案やバグ報告は、GitHub の Issues に投稿してください。
 
 ## 作者
+
 [tetsuya ohira](https://github.com/tetsuyaohira)
