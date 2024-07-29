@@ -51,9 +51,7 @@ export async function generateProductDescription(
         },
         { role: "user", content: prompt },
       ],
-      model: "gpt-3.5-turbo",
-      // model: "gpt-4-1106-preview",
-      // response_format: { type: "json_object" },
+      model: "gpt-4o-mini",
     });
 
     return completion?.choices[0]?.message?.content?.trim();
